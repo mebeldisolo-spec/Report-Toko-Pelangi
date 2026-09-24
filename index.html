@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dashboard Laporan Toko</title>
+<title>Dashboard Laporan Toko - Owner View</title>
 <style>
 :root{--bg:#f4f5f7;--card:#fff;--tx:#1a1d23;--mut:#6b7280;--bd:#e3e6ea;--ac:#2563eb;--up:#16a34a;--dn:#dc2626}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1115;--card:#181b21;--tx:#e8eaed;--mut:#9aa1ad;--bd:#2a2f38;--ac:#60a5fa;--up:#4ade80;--dn:#f87171}}
@@ -61,28 +61,16 @@ select,input{font:inherit;color:var(--tx);background:var(--bg);border:1px solid 
 <header>
  <div><h1>Dashboard Laporan Toko</h1><div class="sub" id="sub"></div></div>
  <div class="btns noprint">
-  <button id="bEdit">✏ Edit Data</button>
-  <button id="bOwner">👁 Buat File Owner</button>
-  <button class="p" id="bData">⬆ Unduh data.json</button>
+  
+  
+  
   <button class="p" id="bPdf">⬇ PDF</button>
   <button id="bXls">⬇ Excel</button>
   <button id="bPrn">🖨 Cetak</button>
  </div>
 </header>
 
-<section class="card noprint" id="ed" hidden>
- <h2>Edit Data</h2>
- <div id="edf"></div>
- <div class="btns" style="margin-top:14px">
-  <button class="p" id="eApply">Terapkan &amp; Simpan</button>
-  <button id="eJson">Unduh data.json</button>
-  <button id="eLoad">Muat Data (.json)</button>
-  <button id="eReset">Reset ke Data Awal</button>
-  <button id="eClose">Tutup</button>
-  <input type="file" id="eFile" accept=".json" hidden>
- </div>
- <p class="note">Data tersimpan otomatis di browser ini. Untuk cadangan atau pindah komputer, gunakan “Unduh data.json”. File data.json yang sama dipakai versi owner yang dipasang di GitHub agar tampilannya ikut terbarui. Jumlah MP per toko dipakai untuk menghitung Revenue/MP (Omzet ÷ MP).</p>
-</section>
+
 
 <div class="kpis" id="kpis"></div>
 
@@ -115,7 +103,6 @@ select,input{font:inherit;color:var(--tx);background:var(--bg);border:1px solid 
 <div class="card"><h2>Catatan Validasi Data</h2><ul class="note" id="notes" style="margin:0;padding-left:18px"></ul></div>
 </div>
 <div id="toast"></div>
-
 <script>/*!
  * Chart.js v4.4.1
  * https://www.chartjs.org
@@ -556,27 +543,9 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
 ;</script>
 <script>
 const KEY='dashboardToko_v2';
-/*DEF_START*/const DEF={
- periode:'September 2026',
- mp:{pria:31,wanita:30},
- to:[{l:'Agustus',v:5.04},{l:'September',v:0}],
- st:[
-  {n:'P1',o:25590300,mom:-31.5,yoy:-60.62,mp:8,k:1},
-  {n:'P2',o:89981780,mom:-30.5,yoy:-27.07,mp:5,k:1},
-  {n:'P3 + Online',o:524821333,mom:-43.6,yoy:-53.33,mp:15,k:1},
-  {n:'P4',o:128814956,mom:-13.0,yoy:6.49,mp:6,k:1},
-  {n:'P5',o:195014745,mom:-19.1,yoy:-25.53,mp:9,k:1}],
- saIn:1,
- w:{o:25,rev:25,mom:25,yoy:25},
- mg:{gaji:139155609,pct:75,ket:'Mendekati target, perlu didorong'},
- be:[{t:'P1',n:'Anugrah Satria Nugraha'},{t:'P2',n:'Febby Soraya'},{t:'P3',n:'Al Inaya Aurora Amalia'},{t:'P4',n:'Ammar Choirudin'},{t:'P5',n:'Erik Putra Oktavian'},{t:'Online',n:'Khoirul Alif'}],
- sa:[{n:'Area 1',off:0,on:0},{n:'Area 2',off:0,on:0},{n:'Area 3',off:0,on:0},{n:'Area 4',off:0,on:0},{n:'Area 5',off:0,on:0}]
-};/*DEF_END*/
+const DEF={"periode":"September 2026","mp":{"pria":30,"wanita":30},"to":[{"l":"Agustus","v":5.04},{"l":"September","v":1.64}],"st":[{"n":"P1","o":25590300,"mom":-31.5,"yoy":-60.62,"mp":8,"k":1},{"n":"P2","o":89981780,"mom":-30.5,"yoy":-27.07,"mp":5,"k":1},{"n":"P3 + Online","o":524821333,"mom":-43.6,"yoy":-53.33,"mp":15,"k":1},{"n":"P4","o":128814956,"mom":-13,"yoy":6.49,"mp":6,"k":1},{"n":"P5","o":195014745,"mom":-19.1,"yoy":-25.53,"mp":9,"k":1}],"saIn":1,"w":{"o":25,"rev":25,"mom":25,"yoy":25},"mg":{"gaji":139155609,"pct":75,"ket":"Mendekati target, perlu didorong"},"be":[{"t":"P1","n":"Anugrah Satria Nugraha"},{"t":"P2","n":"Febby Soraya"},{"t":"P3","n":"Al Inaya Aurora Amalia"},{"t":"P4","n":"Ammar Choirudin"},{"t":"P5","n":"Erik Putra Oktavian"},{"t":"Online","n":"Khoirul Alif"}],"sa":[{"n":"Area 1","off":0,"on":0},{"n":"Area 2","off":0,"on":0},{"n":"Area 3","off":0,"on":0},{"n":"Area 4","off":0,"on":0},{"n":"Area 5","off":0,"on":0}]};
 const clone=o=>JSON.parse(JSON.stringify(o));
-/*LOAD_START*/let D;
-try{const s=localStorage.getItem(KEY);D=s?Object.assign(clone(DEF),JSON.parse(s)):clone(DEF);}catch(e){D=clone(DEF);}
-D.to.forEach(t=>{t.l=String(t.l).replace(/\s*\(s\/d tgl \d+\)/,'');});
-const persist=()=>{try{localStorage.setItem(KEY,JSON.stringify(D));}catch(e){}};/*LOAD_END*/
+let D=clone(DEF);
 
 const nf=n=>Math.round(n).toLocaleString('id-ID');
 const rp=n=>'Rp '+nf(n);
@@ -616,8 +585,8 @@ function notesList(){
  n.push(gap?`Jumlah MP toko yang dipakai untuk Revenue/MP adalah ${X.impMP} orang, sedangkan total karyawan ${X.totMP}. Selisih ${gap} orang (kantor pusat/gudang/non-toko?) perlu dikonfirmasi.`:`Jumlah MP toko (${X.impMP}) sama dengan total karyawan.`);
  const top=[...X.rows].sort((a,b)=>b.o-a.o)[0];
  n.push(`Unit dengan omzet terbesar: ${top.n} (${fd(100*top.o/X.all,0)}% dari total omzet, MoM ${pc(top.mom)}). Jika P3 dan Online digabung, kontribusi masing-masing tidak dapat dipisahkan.`);
- n.push(`Best Store dinilai dari 4 komponen (Omzet, Revenue/MP, MoM, YoY) yang masing-masing diskalakan 0–100 antar toko yang ikut dinilai (terbaik = 100, terendah = 0), sehingga selisih kecil bisa tampak besar bila jumlah toko sedikit. Revenue/MP cenderung tinggi pada toko dengan MP sedikit; bobot dapat diatur di Edit Data.${X.out.length?' Di luar penilaian: '+X.out.map(r=>r.n).join(', ')+'.':''}${X.rank.length>1&&X.rank[0].sc-X.rank[1].sc<5?` Selisih peringkat 1 (${X.rank[0].n}) dan 2 (${X.rank[1].n}) hanya ${fd(X.rank[0].sc-X.rank[1].sc,1)} poin, jadi hasilnya peka terhadap perubahan bobot.`:''}`);
- n.push(X.hasSA?`Sales Area berdiri sendiri (Total Pembayaran ${rp(X.saTot)}: Offline ${rp(X.saOff)}, Online ${rp(X.saOn)}) dan ${X.add?'ditambahkan ke':'tidak ditambahkan ke'} Total Omzet. Pastikan penjualan Sales Area tidak juga tercatat di omzet P1–P5 agar tidak terhitung dua kali.`:'Data Sales Area (Total Pembayaran Offline & Online) belum diisi; isi lewat Edit Data.');
+ n.push(`Best Store dinilai dari 4 komponen (Omzet, Revenue/MP, MoM, YoY) yang masing-masing diskalakan 0–100 antar toko yang ikut dinilai (terbaik = 100, terendah = 0), sehingga selisih kecil bisa tampak besar bila jumlah toko sedikit. Revenue/MP cenderung tinggi pada toko dengan MP sedikit.${X.out.length?' Di luar penilaian: '+X.out.map(r=>r.n).join(', ')+'.':''}${X.rank.length>1&&X.rank[0].sc-X.rank[1].sc<5?` Selisih peringkat 1 (${X.rank[0].n}) dan 2 (${X.rank[1].n}) hanya ${fd(X.rank[0].sc-X.rank[1].sc,1)} poin, jadi hasilnya peka terhadap perubahan bobot.`:''}`);
+ n.push(X.hasSA?`Sales Area berdiri sendiri (Total Pembayaran ${rp(X.saTot)}: Offline ${rp(X.saOff)}, Online ${rp(X.saOn)}) dan ${X.add?'ditambahkan ke':'tidak ditambahkan ke'} Total Omzet. Pastikan penjualan Sales Area tidak juga tercatat di omzet P1–P5 agar tidak terhitung dua kali.`:'Data Sales Area (Total Pembayaran Offline & Online) belum diisi.');
  return n;
 }
 function renderText(){
@@ -680,34 +649,7 @@ matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>draw())
 addEventListener('beforeprint',()=>draw(true));
 addEventListener('afterprint',()=>draw());
 
-/*EDITOR_START*/// ---------- editor ----------
-const inp=(lab,p,v,t)=>`<label>${lab}<input data-p="${p}" data-t="${t}" value="${esc(t=='f'?String(v).replace('.',','):v)}" ${t=='s'?'':'inputmode="decimal"'}></label>`;
-function buildForm(){
- let h=`<div class="sec">Umum</div><div class="fg">${inp('Periode (nama bulan)','periode',D.periode,'s')}</div>`;
- h+=`<div class="sec">Manpower</div><div class="fg">${inp('Jumlah Pria','mp.pria',D.mp.pria,'n')}${inp('Jumlah Wanita','mp.wanita',D.mp.wanita,'n')}</div>`;
- h+=`<div class="sec">Turnover Rate (%)</div><div class="fg">${inp('Periode sebelumnya','to.0.l',D.to[0].l,'s')}${inp('Turnover (%)','to.0.v',D.to[0].v,'f')}${inp('Bulan ini','to.1.l',D.to[1].l,'s')}${inp('Turnover (%)','to.1.v',D.to[1].v,'f')}</div>`;
- h+=`<div class="sec">Omzet per Toko</div>`+D.st.map((s,i)=>`<div class="fg">${inp('Nama toko',`st.${i}.n`,s.n,'s')}${inp('Omzet (Rp)',`st.${i}.o`,s.o,'n')}${inp('MoM (%)',`st.${i}.mom`,s.mom,'f')}${inp('YoY (%)',`st.${i}.yoy`,s.yoy,'f')}${inp('Jumlah MP',`st.${i}.mp`,s.mp,'n')}<label>Ikut penilaian Best Store<select data-p="st.${i}.k" data-t="b"><option value="1"${s.k===0?'':' selected'}>Ya</option><option value="0"${s.k===0?' selected':''}>Tidak</option></select></label></div>`).join('');
- h+=`<div class="sec">Bobot Penilaian Best Store (angka relatif, otomatis dijadikan 100%)</div><div class="fg">${inp('Omzet','w.o',D.w.o,'f')}${inp('Revenue/MP','w.rev',D.w.rev,'f')}${inp('MoM','w.mom',D.w.mom,'f')}${inp('YoY','w.yoy',D.w.yoy,'f')}</div>`;
- h+=`<div class="sec">Margin</div><div class="fg">${inp('Estimasi biaya gaji (Rp)','mg.gaji',D.mg.gaji,'n')}${inp('HPP + Opex (% dari penjualan)','mg.pct',D.mg.pct,'f')}${inp('Keterangan margin','mg.ket',D.mg.ket,'s')}</div>`;
- h+=`<div class="sec">Sales Area – Total Pembayaran (kosongkan jika belum ada data)</div>`+D.sa.map((a,i)=>`<div class="fg">${inp('Nama area',`sa.${i}.n`,a.n,'s')}${inp('Offline (Rp)',`sa.${i}.off`,a.off||'','n')}${inp('Online (Rp)',`sa.${i}.on`,a.on||'','n')}</div>`).join('');
- h+=`<div class="fg"><label>Masukkan Sales Area ke Total Omzet<select data-p="saIn" data-t="b"><option value="1"${D.saIn===0?'':' selected'}>Ya</option><option value="0"${D.saIn===0?' selected':''}>Tidak</option></select></label></div>`;
- h+=`<div class="sec">The Best Employee</div><div class="fg">`+D.be.map((e,i)=>inp('Toko/unit',`be.${i}.t`,e.t,'s')+inp('Nama',`be.${i}.n`,e.n,'s')).join('')+'</div>';
- $('edf').innerHTML=h;
-}
-const cv=(v,t)=>t=='b'?(v==='0'?0:1):t=='s'?v.trim():t=='n'?(parseInt(String(v).replace(/[^\d-]/g,''),10)||0):(parseFloat(String(v).replace(',','.'))||0);
-function setP(o,p,v){const a=p.split('.');while(a.length>1)o=o[a.shift()];o[a[0]]=v;}
-$('bEdit').onclick=()=>{const e=$('ed');if(e.hidden){buildForm();e.hidden=false;e.scrollIntoView({behavior:'smooth'});}else e.hidden=true;};
-$('eClose').onclick=()=>{$('ed').hidden=true;};
-$('eApply').onclick=()=>{
- document.querySelectorAll('#edf [data-p]').forEach(i=>setP(D,i.dataset.p,cv(i.value,i.dataset.t)));
- persist();render();toast('Data diperbarui & disimpan di browser ini.');
-};
-$('eReset').onclick=()=>{if(confirm('Kembalikan semua data ke data awal?')){D=clone(DEF);persist();buildForm();render();}};
-$('eJson').onclick=()=>saveFile('data.json',JSON.stringify(Object.assign({},D,{_savedAt:new Date().toISOString()}),null,2));
-$('eLoad').onclick=()=>$('eFile').click();
-$('eFile').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{D=Object.assign(clone(DEF),JSON.parse(r.result));persist();buildForm();render();toast('Data dimuat.');}catch(x){toast('File JSON tidak valid.');}};r.readAsText(f);e.target.value='';};
 
-/*EDITOR_END*/
 // ---------- ekspor ----------
 let DL=null;
 (async()=>{try{DL=window.claude?await claude.use('downloads'):null;}catch(e){DL=null;}})();
@@ -783,7 +725,10 @@ $('bPdf').onclick=()=>{
  saveFile(slug()+'.pdf',d.output('arraybuffer'));
 };
 
-/*OWNERRT_START
+
+
+const SNAP0="24 Sep 2026, 15.50";
+
 let SNAP=SNAP0;
 const stamp=()=>{$('sub').textContent+=' · Data per '+SNAP;};
 render();stamp();
@@ -804,50 +749,7 @@ async function sync(){
 sync();
 setInterval(sync,60000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)sync();});
-OWNERRT_END*/
-/*OWNERGEN_START*/
-function ownerHtml(){
- const scr=[...document.scripts].filter(s=>!s.src);
- const libs=scr.find(s=>s.textContent.includes('Chart.js v4'+'.4.1'));
- const app=scr.find(s=>s.textContent.includes('LOAD_'+'START'));
- const sty=[...document.querySelectorAll('style')].find(s=>s.textContent.includes('--bg:#f4f5f7'));
- const src=document.querySelector('.wrap');
- if(!libs||!app||!sty||!src)throw new Error('Sumber halaman tidak lengkap');
- const w=src.cloneNode(true);
- ['#ed','#bEdit','#bOwner','#bData'].forEach(q=>{const e=w.querySelector(q);if(e)e.remove();});
- ['sub','kpis','tFin','tSa','saSum','tMg','win','tBs','bsNote','emp','notes'].forEach(id=>{const e=w.querySelector('#'+id);if(e)e.innerHTML='';});
- w.querySelectorAll('canvas').forEach(c=>{const n=document.createElement('canvas');n.id=c.id;c.replaceWith(n);});
- const snap=new Date().toLocaleString('id-ID',{dateStyle:'medium',timeStyle:'short'});
- const data=JSON.stringify(D).replace(/</g,'\\u003c');
- const rtm=app.textContent.match(/\/\*OWNERRT_START([\s\S]*?)OWNERRT_END\*\//);
- if(!rtm)throw new Error('Blok runtime owner tidak ditemukan');
- const rt=rtm[1];
- const js=app.textContent
-  .replace(/\/\*OWNERRT_START[\s\S]*?OWNERRT_END\*\//,()=>'')
-  .replace(/\/\*DEF_START\*\/[\s\S]*?\/\*DEF_END\*\//,()=>'const DEF='+data+';')
-  .replace(/\/\*LOAD_START\*\/[\s\S]*?\/\*LOAD_END\*\//,()=>'let D=clone(DEF);')
-  .replace(/\/\*EDITOR_START\*\/[\s\S]*?\/\*EDITOR_END\*\//,()=>'')
-  .replace(/\/\*OWNERGEN_START\*\/[\s\S]*?\/\*OWNERGEN_END\*\//,()=>'')
-  .replace(/\/\*BOOT_START\*\/[\s\S]*?\/\*BOOT_END\*\//,()=>'const SNAP0='+JSON.stringify(snap)+';\n'+rt)
-  .replace('MP sedikit; bobot dapat diatur di Edit Data.','MP sedikit.')
-  .replace('belum diisi; isi lewat Edit Data.','belum diisi.');
- if(/bEdit|bOwner|bData|localStorage|Edit Data|EDITOR_|LOAD_START|OWNERGEN|OWNERRT/.test(js)||w.querySelector('#ed'))throw new Error('Pembersihan tidak sempurna');
- return '<!DOCTYPE html>\n<html lang="id">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>Dashboard Laporan Toko - Owner View</title>\n<style>'+sty.textContent+'</style>\n</head>\n<body>\n'+w.outerHTML+'\n<div id="toast"></div>\n<script>'+libs.textContent+'<'+'/script>\n<script>'+js+'<'+'/script>\n</body>\n</html>\n';
-}
-$('bData').onclick=()=>{
- try{
-  if(!$('ed').hidden){document.querySelectorAll('#edf [data-p]').forEach(i=>setP(D,i.dataset.p,cv(i.value,i.dataset.t)));persist();render();}
-  saveFile('data.json',JSON.stringify(Object.assign({},D,{_savedAt:new Date().toISOString()}),null,2));
- }catch(e){toast('Gagal membuat data.json: '+e.message);}
-};
-$('bOwner').onclick=()=>{
- try{
-  if(!$('ed').hidden){document.querySelectorAll('#edf [data-p]').forEach(i=>setP(D,i.dataset.p,cv(i.value,i.dataset.t)));persist();render();}
-  saveFile(slug()+'-owner.html',ownerHtml());
- }catch(e){toast('Gagal membuat file owner: '+e.message);}
-};
-/*OWNERGEN_END*/
-/*BOOT_START*/render();/*BOOT_END*/
+
 </script>
 </body>
 </html>
